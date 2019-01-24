@@ -711,7 +711,7 @@ int greatHallEffect(int handPos, int currentPlayer, struct gameState *state)
 int outpostEffect(int handPos, int currentPlayer, struct gameState *state)
 {
   //set outpost flag
-  state->outpostPlayed--; // changed ++ to --
+  state->outpostPlayed++; 
 			
   //discard card
   discardCard(handPos, currentPlayer, state, 0);
