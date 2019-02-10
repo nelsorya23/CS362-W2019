@@ -372,6 +372,9 @@ int endTurn(struct gameState *state) {
   state->numActions = 1;
   state->coins = 0;
   state->numBuys = 1;
+  printf("Played cards 0 = %d\n", state->playedCards[0]); 
+  printf("Played cards 1 = %d\n", state->playedCards[1]); 
+
   state->playedCardCount = 0;
   state->handCount[state->whoseTurn] = 0;
 
@@ -643,7 +646,7 @@ int getCost(int cardNumber)
   return -1;
 }
 
-int adventureEffect (int drawntreasure, int currentPlayer, int cardDrawn, int z, int* temphand, struct gameState *state)
+int adventurerEffect (int drawntreasure, int currentPlayer, int cardDrawn, int z, int* temphand, struct gameState *state)
 {
    while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -742,7 +745,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      return adventureEffect(drawntreasure, currentPlayer, cardDrawn, z, temphand, state);
+      return adventurerEffect(drawntreasure, currentPlayer, cardDrawn, z, temphand, state);
 
     case council_room:
       //+4 Cards
