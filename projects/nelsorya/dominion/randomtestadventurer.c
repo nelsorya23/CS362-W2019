@@ -5,14 +5,12 @@
 *
 *Tests:
 *This function is tested when the adventurer card is played with  
-*several treasure cards in the draw pile, exactly two treasure cards
-*in the draw pile, and no treasure cards in the draw pile.
-i*
-*The objective of the test is to see if a net of one card is added to the 
-*player's hand after drawing looking for two treasure cards and discarding
-*the adventurer card.
+*a ranom number of treasure cards in the draw pile. Tests run can be seen
+*in the runTest function below.
+*The objective of the test is to see the impact on the gameState after the
+*cards intended effect of drawing cards until two treasure cards are found.
 * Include in makefile:
-*    gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+*    gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
 ***********************************************************************/
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -32,16 +30,6 @@ struct testValues {
    int handPos;
 };
 
-volatile sig_atomic_t HAS_SIGSEGV = 0;
-
-//function taken from Piazza post @120  
-void catch_alarm(int sig_num)
-{
-   char* message = "caugth SIGSEGV\n";
-   write(STDOUT_FILENO, message, 15); 
-   HAS_SIGSEGV = 1;
-   //longjmp(buf, 1);
-}
 
 //Outputs whether a test failed based on comaring test result to expected result
 void testResult(int result, int expected, int* flag, char msg[])
@@ -114,12 +102,13 @@ int playerState(struct gameState* a, struct gameState* b, int player)
    }
 }
 
-
+//generates random number between min and max
 int randomNum(min, max)
 {
    return (rand() % (max - min + 1)) + min;
 }
 
+//runs tests on gameState variables
 void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv)
 {
    int currentPlayer = G->whoseTurn;
@@ -211,6 +200,7 @@ void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv
 
 }
 
+//sets gameState variables randomly before testing
 void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
 {
 

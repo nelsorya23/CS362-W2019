@@ -1,18 +1,16 @@
 /***********************************************************************
 *Author: Ryan Nelson
 *
-*Tests adventurerEffect function to see if it is working properly.
+*Tests greatHallEffect function to see if it is working properly.
 *
 *Tests:
-*This function is tested when the adventurer card is played with  
-*several treasure cards in the draw pile, exactly two treasure cards
-*in the draw pile, and no treasure cards in the draw pile.
-i*
-*The objective of the test is to see if a net of one card is added to the 
-*player's hand after drawing looking for two treasure cards and discarding
-*the adventurer card.
+*This function is tested when the great_hall card is played with  
+*random gameState variables. It tests variables to see if there results
+*are correct after the card was played with its intended effect of drawing
+*one card and acquring and action. Specific tests can be seen in the runTest
+*function below. 
 * Include in makefile:
-*    gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+*    gcc -o randomtestgreat_hall -g randomtestgreat_hall.c dominion.o rngs.o $(CFLAGS)
 ***********************************************************************/
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -31,16 +29,6 @@ struct testValues {
    int handPos;
 };
 
-
-volatile sig_atomic_t HAS_SIGSEGV = 0;
-
-//function taken from Piazza post @120  
-void catch_alarm(int sig_num)
-{
-   //char* message = "caught SIGSEGV\n";
-   //write(STDOUT_FILENO, message, 15); 
-   HAS_SIGSEGV = 1;
-}
 
 //Outputs whether a test failed based on comaring test result to expected result
 void testResult(int result, int expected, int* flag, char msg[])
@@ -114,11 +102,13 @@ int playerState(struct gameState* a, struct gameState* b, int player)
 }
 
 
+//generates random number between min and max
 int randomNum(min, max)
 {
    return (rand() % (max - min + 1)) + min;
 }
 
+//runs tests on gameState variables
 void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv)
 {
    int currentPlayer = G->whoseTurn;
@@ -192,6 +182,7 @@ void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv
 
 }
 
+//generates random gamestate variables to be tested
 void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
 {
 
@@ -237,17 +228,6 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
 
 int main()
 {
-   //register handlers for SIGSEGV
-   //struct sigaction SIGSEGV_action = {0}, ignore_action = {0};
-   
-   //SIGSEGV_action.sa_handler = catch_alarm;
-   //sigfillset(&SIGSEGV_action.sa_mask);
-   //SIGSEGV_action.sa_flags = 0;
-
-   //ignore_action.sa_handler = SIG_IGN;
-
-   //sigaction(SIGSEGV, &SIGSEGV_action, NULL);
-
    int seed = time(0);
    srand(seed);
    int* flag = 0;
