@@ -215,7 +215,12 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
 
    
    //set deck of current player randomly
-   G->deckCount[currentPlayer] = randomNum(0, MAX_DECK);
+   int tempNum = randomNum(0, 3);
+   if(tempNum < 3)
+      G->deckCount[currentPlayer] = randomNum(0, 5);
+   else 
+      G->deckCount[currentPlayer] = randomNum(0, MAX_DECK);
+
    for(i = 0; i < G->deckCount[currentPlayer]; i++)
    {
       G->deck[currentPlayer][i] = randomNum(0, 26);
@@ -251,7 +256,7 @@ int main()
    struct gameState G, testG;// declare a gameState struct
    struct testValues tv; //holds test values calculated when randomly setting game state
 
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 1000; i++)
    {
       int numPlayer = randomNum(2, 4); //initialize number of players playing game
       int currentPlayer = randomNum(0, numPlayer - 1);; //initialize current player

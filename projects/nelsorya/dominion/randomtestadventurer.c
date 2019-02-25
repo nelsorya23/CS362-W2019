@@ -32,7 +32,6 @@ struct testValues {
    int handPos;
 };
 
-jmp_buf buf;
 volatile sig_atomic_t HAS_SIGSEGV = 0;
 
 //function taken from Piazza post @120  
@@ -161,11 +160,7 @@ void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv
    //run function with copied gameState
    int returnResult = 1;
    returnResult = cardEffect(card, choice1, choice2, choice3, testG, tv->handPos, bonus);
-   if(HAS_SIGSEGV == 1)
-   {
-      printf("Segfault happened when running this test\n");
-      HAS_SIGSEGV = 0;
-   }
+
    //see if return result is correct
    testResult(returnResult, 0, &flag, "Does returned result = 0"); 
 
@@ -243,7 +238,12 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
 
    
    //set deck of current player randomly
-   G->deckCount[currentPlayer] = randomNum(0, 0);//MAX_DECK
+   int tempNum = randomNum(0, 3);
+   if(tempNum < 3)
+      G->deckCount[currentPlayer] = randomNum(0, 5);
+   else 
+      G->deckCount[currentPlayer] = randomNum(0, MAX_DECK);
+
    tv->deckTreasureCount = 0;
    for(i = 0; i < G->deckCount[currentPlayer]; i++)
    {
@@ -253,7 +253,7 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
    }
 
    //set discard of current player randomly
-   G->discardCount[currentPlayer] = randomNum(0, 0); //MAX_DECK
+   G->discardCount[currentPlayer] = randomNum(0, MAX_DECK); 
    tv->discardTreasureCount = 0;
    for(i = 0; i < G->discardCount[currentPlayer]; i++)
    {
@@ -263,26 +263,19 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
    }
 
    //make sure there are at least 2 treasure cards between the deck and discard piles
-   //if(tv->discardTreasureCount + tv->deckTreasureCount < 2)
-   //{
-      //G->discard[currentPlayer][G->discardCount[currentPlayer]] = copper;
-      //G->discardCount[currentPlayer]++;
-      //G->deck[currentPlayer][G->deckCount[currentPlayer]] = copper;
-      //G->deckCount[currentPlayer]++;
+   if(tv->discardTreasureCount + tv->deckTreasureCount < 2)
+   {
+      G->discard[currentPlayer][G->discardCount[currentPlayer]] = copper;
+      G->discardCount[currentPlayer]++;
+      G->deck[currentPlayer][G->deckCount[currentPlayer]] = copper;
+      G->deckCount[currentPlayer]++;
 
-   //}
+   }
 
 }
 
 int main()
 {
-   //register handlers for SIGSEGV
-   struct sigaction *sa; 
-
-   sa = malloc(sizeof(struct sigaction));
-   sa->sa_handler = catch_alarm;
-   sigaction(SIGSEGV, sa, NULL);
-
    int seed = time(0);
    srand(seed);
    int* flag = 0;

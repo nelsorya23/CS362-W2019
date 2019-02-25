@@ -255,7 +255,7 @@ int main()
    struct gameState G, testG;// declare a gameState struct
    struct testValues tv; //holds test values calculated when randomly setting game state
 
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 1000; i++)
    {
       int numPlayer = randomNum(2, 4); //initialize number of players playing game
       int currentPlayer = randomNum(0, numPlayer - 1);; //initialize current player

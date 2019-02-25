@@ -659,7 +659,6 @@ int adventurerEffect (int drawntreasure, int currentPlayer, int cardDrawn, int z
 	else{
 	  temphand[z]=cardDrawn;
 	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-          printf("player hand count = %d\n", state->handCount[currentPlayer]);
 	  z++;
 	}
    }
