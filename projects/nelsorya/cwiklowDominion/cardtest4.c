@@ -231,7 +231,7 @@ int main()
    copyG.hand[currentPlayer][0] = estate;
    copyG.hand[currentPlayer][1] = estate;
    copyG.hand[currentPlayer][2] = estate;
-   copyG.hand[currentPlayer][3] = village;
+   copyG.hand[currentPlayer][3] = great_hall;
    copyG.hand[currentPlayer][4] = estate;
    copyG.deck[currentPlayer][0] = estate;
    copyG.deck[currentPlayer][1] = estate;

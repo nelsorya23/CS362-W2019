@@ -17,6 +17,7 @@ badTestDrawCard: badTestDrawCard.c dominion.o rngs.o
 
 testBuyCard: testDrawCard.c dominion.o rngs.o
 	gcc -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
+
 unittest1: unittest1.c dominion.o rngs.o
 	gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
 
@@ -49,6 +50,47 @@ randomtestvillage: randomtestvillage.c dominion.o rngs.o
 
 randomtestgreat_hall: randomtestgreat_hall.c dominion.o rngs.o
 	gcc -o randomtestgreat_hall -g  randomtestgreat_hall.c dominion.o rngs.o $(CFLAGS)
+
+unittestresults: dominion.o unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+	@echo "Unit Test1 whoseTurn function" > unittestresults.out
+	@echo "" >> unittestresults.out
+	./unittest1 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Unit Test2 handCard function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./unittest2 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Unit Test3 isGameOver function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./unittest3 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Unit Test4 fullDeckCount function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./unittest4 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Card Test1 smith function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./cardtest1 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Card Test2 adventurer function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./cardtest2 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Card Test3 village function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./cardtest3 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Card Test4 great_hall function" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	./cardtest4 >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Gcov Function and Branch Summaries" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	gcov -f -b dominion.c >> unittestresults.out
+	@echo "" >> unittestresults.out
+	@echo "Gcov Branch Coverage Details" >> unittestresults.out
+	@echo "" >> unittestresults.out
+	cat dominion.c.gcov >> unittestresults.out
 
 randomtestresults: dominion.o randomtestadventurer randomtestvillage randomtestgreat_hall
 	@echo "Random Test adventurerEffect function" > randomtestadventurer.out
