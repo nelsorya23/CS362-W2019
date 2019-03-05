@@ -135,7 +135,6 @@ void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv
 
    returnResult = cardEffect(card, choice1, choice2, choice3, testG, tv->handPos, bonus);
    
-    
    //see if return result is correct
    testResult(returnResult, 0, &flag, "Does returned result = 0"); 
 
@@ -156,7 +155,9 @@ void runTest(struct gameState* G, struct gameState* testG, struct testValues* tv
    for(i = 0; i < 26; i++)
    {
       if(testG->supplyCount[i] != G->supplyCount[i])
+      {
          indicator = 1;
+      }
    }
    testResult(indicator, 0, &flag, "Is supplyCount unchanged");
 
@@ -245,7 +246,7 @@ int main()
       G.whoseTurn = currentPlayer; //set current player in game state 
       setGame(&G, currentPlayer, &tv);
       memcpy(&testG, &G, sizeof(struct gameState));
-      
+ 
       printf("-----------------------------------------------------------------------------\n");
       printf("Test %d\n", i+1);
       runTest(&G, &testG, &tv);

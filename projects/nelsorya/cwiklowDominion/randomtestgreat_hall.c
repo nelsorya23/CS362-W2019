@@ -202,7 +202,7 @@ void setGame(struct gameState* G, int currentPlayer, struct testValues* tv)
       randMax = G->handCount[currentPlayer] - 1;
 
    tv->handPos = randomNum(0, randMax);
-   G->hand[currentPlayer][tv->handPos] = village;
+   G->hand[currentPlayer][tv->handPos] = great_hall;
 
    
    //set deck of current player randomly
